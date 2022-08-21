@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<head>
+    <title>LondonMove - Search</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <div id="sidebar">
+        <a href="/">Home</a>
+        <hr style="width: 50px">
+        <a href="/about">About</a>
+    </div>
+    <heading>Search</heading>
+    <form method="post">
+        <br>
+        <label for="location">Borough: </label>
+        <select name="location" id="loc" required>
+            <option selected>Select a borough</option>
+        </select> <br>
+        <br> <input type="submit" name="search" value="Search">
+    </form>
+    <script src="https://unpkg.com/mithril"></script>
+    <script src="search.js"></script>
+</body>
