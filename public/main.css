@@ -100,7 +100,7 @@ img {
 
 input, select {
     border: none;
-	  border-radius: 1px;
+    border-radius: 1px;
     outline: none;
     caret-color: transparent !important; 
     background-color: #414141;
