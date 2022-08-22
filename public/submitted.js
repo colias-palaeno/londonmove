@@ -22,8 +22,7 @@ if (boroughCookie != null) { // checks if there's a cookie with info on this EXA
         m('b', parsedBoroughCookie[2])
     ]))
 } else {
-    const pricesCache = Cookies.get('pricesCache'),
-    crimeCache = Cookies.get(borough+'CrimeCache')
+    const pricesCache = Cookies.get('pricesCache')
     let dataToRender = [],
     boroughCoords;
 
@@ -33,14 +32,10 @@ if (boroughCookie != null) { // checks if there's a cookie with info on this EXA
         .then(arr => 
             boroughCoords = arr[arr.findIndex(b => b.includes(borough))].slice(1)
         );
-        
-        if (crimeCache != null) {
-            dataToRender.push(JSON.parse(crimeCache))
-        } else {
-            await fetch(getCrimeDataURL(...boroughCoords)).then(resp => resp.json())
-            .then(json => dataToRender.push(json.length.toLocaleString()))
-            Cookies.set(borough+'CrimeCache', dataToRender[0])
-        }
+
+        await fetch(getCrimeDataURL(...boroughCoords))
+        .then(resp => resp.json())
+        .then(json => dataToRender.push(json.length.toLocaleString()))
 
         if (pricesCache != null) { // checks if there's a cookie with prices from the homepage (info on all boroughs)
             const indexOfBorough = JSON.parse(pricesCache).findIndex(el => el.includes(borough)),
@@ -67,7 +62,7 @@ if (boroughCookie != null) { // checks if there's a cookie with info on this EXA
                 if (prices[0] > prices[1]) higherPrice = 0
                 dataToRender.unshift('£'+prices[0].toLocaleString(), higherPrice)
 
-                Cookies.set(borough, JSON.stringify(dataToRender))
+                Cookies.set(borough, JSON.stringify(dataToRender), {expires: 31})
                 m.render(results, [
                     m('span', [
                         'Average Property Prices: ',
